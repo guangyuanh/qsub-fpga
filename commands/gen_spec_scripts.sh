@@ -1,12 +1,15 @@
 #!/bin/bash
 #set -e
-#INPUT_TYPE=test
-INPUT_TYPE=ref
-COMMAND_DIR=/nscratch/midas/initram/riscv-spec-${INPUT_TYPE}/commands
-OUTPUT_SUBDIR=/nscratch/midas/spec
+INPUT_TYPE=test
+#INPUT_TYPE=ref
+#COMMAND_DIR=/nscratch/midas/initram/riscv-spec-${INPUT_TYPE}/commands
+COMMAND_DIR=/home/guangyuanh/research/riscv/speckle/riscv-spec-test/commands
+#OUTPUT_SUBDIR=/nscratch/midas/spec
+OUTPUT_SUBDIR=/home/guangyuanh/research/riscv/qsub-fpga/commands
 
 # the integer set
-BENCHMARKS=(400.perlbench 401.bzip2 403.gcc 429.mcf 445.gobmk 456.hmmer 458.sjeng 462.libquantum 464.h264ref 471.omnetpp 473.astar 483.xalancbmk)
+#BENCHMARKS=(400.perlbench 401.bzip2 403.gcc 429.mcf 445.gobmk 456.hmmer 458.sjeng 462.libquantum 464.h264ref 471.omnetpp 473.astar 483.xalancbmk)
+BENCHMARKS=(403.gcc 462.libquantum)
 
 
 QSUB_COMMAND_FILE=spec.$INPUT_TYPE.txt

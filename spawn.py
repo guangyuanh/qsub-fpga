@@ -14,14 +14,19 @@ import shutil
 from datetime import datetime
 
 DEFAULT_FPGA_BITSTREAM="/nscratch/midas/bitstream/midas_wrapper.bit"
-LINUX_SOURCE=os.path.join("/scratch", getpass.getuser(), "initramfs_linux_flow")
+#LINUX_SOURCE=os.path.join("/scratch", getpass.getuser(), "initramfs_linux_flow")
+#LINUX_SOURCE=os.path.join("/home", getpass.getuser(), "/research/riscv/initramfs_linux_guangyuanh")
+LINUX_SOURCE="/home/guangyuanh/research/riscv/initfs-linux-guangyuanh"
+#/home/guangyuanh/research/riscv/initfs-linux-guangyuanh
 SUFFIX="MAS"
 OPTION="close"
 LATENCY=1
 PENALTY=5
 BANDWIDTH=8
-BUILD_DIR="/nscratch/midas/qsub-fpga-initramfs/script-%s-%s" % (SUFFIX, OPTION)
-OUTPUT_DIR="/nscratch/midas/qsub-fpga-initramfs/output-%s-%s" % (SUFFIX, OPTION)
+#BUILD_DIR="/nscratch/midas/qsub-fpga-initramfs/script-%s-%s" % (SUFFIX, OPTION)
+BUILD_DIR="/home/guangyuanh/research/riscv/qsub-fpga/script-%s-%s" % (SUFFIX, OPTION)
+#OUTPUT_DIR="/nscratch/midas/qsub-fpga/output-%s-%s" % (SUFFIX, OPTION)
+OUTPUT_DIR="/home/guangyuanh/research/riscv/qsub-fpga/output-%s-%s" % (SUFFIX, OPTION)
 #BUILD_DIR="/nscratch/midas/qsub-fpga-initramfs/script-%s-%d-%d-%d" % (SUFFIX, LATENCY, PENALTY, BANDWIDTH)
 #OUTPUT_DIR="/nscratch/midas/qsub-fpga-initramfs/output-%s-%d-%d-%d" % (SUFFIX, LATENCY, PENALTY, BANDWIDTH)
 #BUILD_DIR="/nscratch/midas/qsub-fpga-initramfs/script-%d-%d" % (LATENCY, BANDWIDTH)
@@ -159,9 +164,11 @@ def generate_init_file(cmd_str, dir_str, initfile, disable_counters):
 def generate_bblvmlinux(bmk_str, dir_str, initfile):
     print "Generating bblvmlinux with: ", initfile
     shutil.copyfile(initfile, os.path.join(LINUX_SOURCE, "profile"))
-    subprocess.check_call(["./build-initram.py", "--dir", "/nscratch/midas/initram/" + dir_str], cwd=LINUX_SOURCE)
+    #subprocess.check_call(["./build-initram.py", "--dir", "/nscratch/midas/initram/" + dir_str], cwd=LINUX_SOURCE)
+    subprocess.check_call(["./build-initram.py", "--dir", "/home/guangyuanh/research/riscv/speckle/" + dir_str], cwd=LINUX_SOURCE)
     subprocess.check_call(["make", "DIRNAME=" + dir_str], cwd=LINUX_SOURCE, shell=True)
-    target_dir = os.path.join("/nscratch", "midas", "qsub-fpga-initramfs", "build")
+    #target_dir = os.path.join("/nscratch", "midas", "qsub-fpga-initramfs", "build")
+    target_dir = os.path.join("/home", "guangyuanh", "research", "riscv", "qsub-fpga")
     if not os.path.exists(target_dir):
       os.makedirs(target_dir)
     linux = os.path.join(target_dir, "bblvmlinux-" + bmk_str)
